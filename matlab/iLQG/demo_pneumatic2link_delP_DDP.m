@@ -1,5 +1,5 @@
 
-function [xtrajout, uhat, Lhat, Tnet, s, end_vel] = demo_pneumatic2link_delP_DDP
+function [xtrajout, uhat, Lhat, Tnet, s, fx, fu] = demo_pneumatic2link_delP_DDP
 % A demo of iLQG/DDP with pneumatic 2link manipulator-dynamics
 
 fprintf(['\nA demonstration of the iLQG algorithm '...
@@ -54,8 +54,9 @@ DYNCST  = @(x,u,i) pneumatic_dyn_cst(x,u,full_DDP, xGoal);
 Op.lims  = [0.0 4.0; 0.0 5.0];
 Op.maxIter = 250;
 % run the optimization
-Op.plot = 0;    
-[xhat,uhat, Lhat]= iLQG(DYNCST, x0, u0, Op);
+Op.plot = 0;
+[xhat, uhat, Lhat, Vx, Vxx, cost, trace, stop, timing,fx,fu] = iLQG(DYNCST, x0, u0, Op)
+%[xhat,uhat, Lhat]= iLQG(DYNCST, x0, u0, Op);
 [row,col] = size(uhat)
 for i=1:col
 xhat0 = xhat(1:8,i);
@@ -387,11 +388,11 @@ l1 = link1_l;
 l2 = link2_l ;
 
 [row,col] = size(u);
-[rowx,colx] = size(x)
+[rowx,colx] = size(x);
 %% final cost for end effector speed
 if any(final)
    %llf      = cf*((x(:,final) - goal).^2); %cf*sabs(x(:,final),pf);
-   llf1      = 0*cf* (bsxfun(@minus, x(:,final), goal)).^2;
+   llf1      = 1*cf* (bsxfun(@minus, x(:,final), goal)).^2;
    %llf      = -cf2* x(4,final).^2;
    s1 = sin(x(1,final)); c1 = cos(x(1,final));
    s12 = sin( x(1,final) + x(2,final));
@@ -405,7 +406,7 @@ if any(final)
    
    vx = l1.*c1.*theta1dot + l2.*c12.*(theta1dot +theta2dot);
    vy = l1.*s1.*theta1dot + l2.*s12.*(theta1dot +theta2dot);
-   llf = llf1 - cf2*sqrt(vx.^2 + vy.^2);
+   llf = llf1 ; %- cf2*sqrt(vx.^2 + vy.^2);
    lf  = real(final);
    lf(final)= llf;
    

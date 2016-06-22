@@ -41,7 +41,7 @@ private:
     double A33atan;*/
     stateVec_t Xreal;
     stateMat_t fx,fxBase;
-    stateR_commandC_t fu,fuBase;
+    //stateR_commandC_t fu,fuBase;
     stateMat_t QxxCont;
     commandMat_t QuuCont;
     commandR_stateC_t QuxCont;

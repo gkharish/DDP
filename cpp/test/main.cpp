@@ -26,7 +26,7 @@ int main()
     unsigned int T = 100;
     double dt=5e-3;
     unsigned int iterMax = 100;
-    double stopCrit = 1e-5;
+    double stopCrit = 1e-2;
     stateVecTab_t xList1;
     commandVecTab_t uList1;
     ILQRSolver::traj lastTraj;
