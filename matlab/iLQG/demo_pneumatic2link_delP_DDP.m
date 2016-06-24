@@ -13,7 +13,7 @@ fprintf(['\nA demonstration of the iLQG algorithm '...
 full_DDP = false;
 
 dt = 5e-3; % dt for dynamics
-ToT = 4;       %(in seconds)
+ToT = 2;       %(in seconds)
 N_tot = ToT/dt;
 %T_horizon = 0.5;  %(in seconds)
 T = N_tot; %10; %T_horizon/dt;
@@ -51,7 +51,7 @@ xGoal = zeros(8,1);
     xGoal(12,1) = 0; %-f2*f2*f2*a2*cos(f2*k*dt);
 % optimization problem
 DYNCST  = @(x,u,i) pneumatic_dyn_cst(x,u,full_DDP, xGoal);
-Op.lims  = [0.0 4.0; 0.0 5.0];
+Op.lims  = [0.0 3.0; 0.0 4.0];
 Op.maxIter = 250;
 % run the optimization
 Op.plot = 0;
@@ -250,8 +250,8 @@ state_deriv(7,:) = (-wnb1.^2).*x(5,:,:) - 2*wnb1.*x(7,:,:) + (wnb1.^2).*Pdes1;
 state_deriv(8,:) = (-wnb2.^2).*x(6,:,:) - 2*wnb2.*x(8,:,:) + (wnb2.^2).*Pdes2;
 
 %% Force calculation
-T1 = forcecal(x,joint1_lo,joint1_alphaob,joint1_k,joint1_ro,joint1_R,1,4);
-T2 = forcecal(x,joint2_lo,joint2_alphaob,joint2_k,joint2_ro,joint2_R,2,5);
+T1 = forcecal(x,joint1_lo,joint1_alphaob,joint1_k,joint1_ro,joint1_R,1,3);
+T2 = forcecal(x,joint2_lo,joint2_alphaob,joint2_k,joint2_ro,joint2_R,2,4);
 % T = [T1 T2]';
 
 %% Mass Inertia Matrix 
@@ -369,12 +369,12 @@ u(:,final)  = 0;
 
 cu  = 1*1e-6*[1 1];         % control cost coefficients
 
-cf  = 1e2*[1 1 0 0 0 0 0 0];    % final cost coefficients
+cf  = 1e-2*[1 1 0 0 0 0 0 0];    % final cost coefficients
 cf2 = 1e3;
 cf3 = 1e8;
 %pf  = [.01 .01.01 0 1 0]';    % smoothness scales for final cost
 
-cx  = 1e-2*[1 1 1 1 0 0 0 0];          % running cost coefficients
+cx  = 1e-2*[1 1 0 0 0 0 0 0];          % running cost coefficients
 %px  = [.1 .1]';             % smoothness scales for running cost
 
 % control cost
@@ -450,7 +450,7 @@ lx = sum(curcos);
 
 % total const
 %c = lx + lu + lf;
-c =  lxc1 + lxc2 +lu + lf; % lxc1 + lxc2 + lu;
+c =  lu + lf + lx; % lxc1 + lxc2 + lu;
 function y = sabs(x,p)
 % smooth absolute-value function (a.k.a pseudo-Huber)
 y = pp( sqrt(pp(x.^2,p.^2)), -p);
@@ -651,8 +651,8 @@ fv2 = 0.25;
 %wn = [wnb1 wnb2]';
 
 %% Muslces force parameter calculation
-[fx1term,Pst1,fx1term_dot,Pst1_dot] = fxparcal(x,joint1_lo,joint1_alphaob,joint1_k,joint1_ro,joint1_R,1,4);
-[fx2term,Pst2,fx2term_dot,Pst2_dot] = fxparcal(x,joint2_lo,joint2_alphaob,joint2_k,joint2_ro,joint2_R,2,5);
+[fx1term,Pst1,fx1term_dot,Pst1_dot] = fxparcal(x,joint1_lo,joint1_alphaob,joint1_k,joint1_ro,joint1_R,1,3);
+[fx2term,Pst2,fx2term_dot,Pst2_dot] = fxparcal(x,joint2_lo,joint2_alphaob,joint2_k,joint2_ro,joint2_R,2,4);
 % T = [T1 T2]';
 
 %% Mass Inertia Matrix 
@@ -862,8 +862,8 @@ state_deriv(7,:) = (-wnb1.^2).*x(5,:,:) - 2*wnb1.*x(7,:,:) + (wnb1.^2).*Pdes1;
 state_deriv(8,:) = (-wnb2.^2).*x(6,:,:) - 2*wnb2.*x(8,:,:) + (wnb2.^2).*Pdes2;
 
 %% Force calculation
-T1 = forcecal(x,joint1_lo,joint1_alphaob,joint1_k,joint1_ro,joint1_R,1,4);
-T2 = forcecal(x,joint2_lo,joint2_alphaob,joint2_k,joint2_ro,joint2_R,2,5);
+T1 = forcecal(x,joint1_lo,joint1_alphaob,joint1_k,joint1_ro,joint1_R,1,3);
+T2 = forcecal(x,joint2_lo,joint2_alphaob,joint2_k,joint2_ro,joint2_R,2,4);
 % T = [T1 T2]';
 
 %% Mass Inertia Matrix 

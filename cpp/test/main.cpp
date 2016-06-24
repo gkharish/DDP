@@ -23,10 +23,10 @@ int main()
     xinit << 0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0;
     xDes << 0.5,1.0,0.0,0.0,0.0,0.0,0.0,0.0;
 
-    unsigned int T = 100;
+    unsigned int T = 40;
     double dt=5e-3;
     unsigned int iterMax = 100;
-    double stopCrit = 1e-2;
+    double stopCrit = 1e-3;
     stateVecTab_t xList1;
     commandVecTab_t uList1;
     ILQRSolver::traj lastTraj;
@@ -35,7 +35,7 @@ int main()
     CostFunctionPneumaticarmElbow cost;
 
 
-    ILQRSolver solver(model,cost,ENABLE_FULLDDP,DISABLE_QPBOX);
+    ILQRSolver solver(model,cost,DISABLE_FULLDDP,DISABLE_QPBOX);
     solver.FirstInitSolver(xinit,xDes,T,dt,iterMax,stopCrit);
     
 
