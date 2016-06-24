@@ -101,43 +101,4 @@ commandR_stateC_t RomeoSimpleActuator::computeTensorContux(const stateVec_t& nex
     return QuxCont;
 }
 
-/// accessors ///
-unsigned int RomeoSimpleActuator::getStateNb()
-{
-    return stateNb;
-}
 
-unsigned int RomeoSimpleActuator::getCommandNb()
-{
-    return commandNb;
-}
-
-stateMat_t& RomeoSimpleActuator::getfx()
-{
-    return fx;
-}
-
-stateTens_t& RomeoSimpleActuator::getfxx()
-{
-    return fxx;
-}
-
-stateR_commandC_t& RomeoSimpleActuator::getfu()
-{
-    return fu;
-}
-
-stateR_commandC_commandD_t& RomeoSimpleActuator::getfuu()
-{
-    return fuu;
-}
-
-stateR_stateC_commandD_t& RomeoSimpleActuator::getfxu()
-{
-    return fxu;
-}
-
-stateR_commandC_stateD_t& RomeoSimpleActuator::getfux()
-{
-    return fux;
-}
