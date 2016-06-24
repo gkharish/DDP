@@ -71,6 +71,7 @@ stateVec_t RomeoSimpleActuator::computeNextState(double& dt, const stateVec_t& X
     stateVec_t result = Ad*X + Bd*U;
     result(1,0)+=A13atan*atan(a*(X(3,0)+Xdes(3,0)));
     result(3,0)+=A33atan*atan(a*(X(3,0)+Xdes(3,0)));
+
     return result;
 }
 
@@ -98,4 +99,45 @@ commandMat_t RomeoSimpleActuator::computeTensorContuu(const stateVec_t& nextVx)
 commandR_stateC_t RomeoSimpleActuator::computeTensorContux(const stateVec_t& nextVx)
 {
     return QuxCont;
+}
+
+/// accessors ///
+unsigned int RomeoSimpleActuator::getStateNb()
+{
+    return stateNb;
+}
+
+unsigned int RomeoSimpleActuator::getCommandNb()
+{
+    return commandNb;
+}
+
+stateMat_t& RomeoSimpleActuator::getfx()
+{
+    return fx;
+}
+
+stateTens_t& RomeoSimpleActuator::getfxx()
+{
+    return fxx;
+}
+
+stateR_commandC_t& RomeoSimpleActuator::getfu()
+{
+    return fu;
+}
+
+stateR_commandC_commandD_t& RomeoSimpleActuator::getfuu()
+{
+    return fuu;
+}
+
+stateR_stateC_commandD_t& RomeoSimpleActuator::getfxu()
+{
+    return fxu;
+}
+
+stateR_commandC_stateD_t& RomeoSimpleActuator::getfux()
+{
+    return fux;
 }

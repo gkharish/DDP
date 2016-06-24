@@ -78,12 +78,12 @@ void ILQRSolver::initSolver(stateVec_t& myxInit, stateVec_t& myxDes)
 
 void ILQRSolver::solveTrajectory()
 {
+    
     initTrajectory();
     for(iter=0;iter<iterMax;iter++)
     {
         backwardLoop();
         forwardLoop();
-        cout << changeAmount << endl;
         if(changeAmount<stopCrit)
         {
           break;
@@ -107,7 +107,7 @@ void ILQRSolver::initTrajectory()
     for(unsigned int i=0;i<T;i++)
     {
         uList[i] = zeroCommand;
-        xList[i+1] = dynamicModel->computeNextState(dt,xList[i] ,xDes,zeroCommand) -xDes;
+        xList[i+1] = dynamicModel->computeNextState(dt,xList[i] ,xDes,zeroCommand) - xDes;
         //Xe = xList[i] - xDes;
     }
 }

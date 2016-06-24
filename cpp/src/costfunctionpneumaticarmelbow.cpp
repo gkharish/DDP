@@ -1,4 +1,7 @@
 #include "costfunctionpneumaticarmelbow.h"
+#include "iostream"
+
+using namespace std;
 
 CostFunctionPneumaticarmElbow::CostFunctionPneumaticarmElbow()
 
@@ -23,7 +26,7 @@ CostFunctionPneumaticarmElbow::CostFunctionPneumaticarmElbow()
          0,0,0,0, 0,0,0,0,
          0,0,0,0, 0,0,0,0,
          0,0,0,0, 0,0,0,0;*/
-    Qf = Q; //Qf(0,0) = 0; Qf(1,1) = 0;
+    Qf = Q; Qf(0,0) = 0; Qf(1,1) = 0;
     R << 1e-6,0,
             0, 1e-6;
     lxx = Q;

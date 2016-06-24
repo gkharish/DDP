@@ -1,6 +1,6 @@
 #ifndef ILQRSOLVER_H
 #define ILQRSOLVER_H
-#include <iostream>
+
 #include "config.h"
 
 #include "dynamicmodel.h"
@@ -9,7 +9,7 @@
 #include <Eigen/StdVector>
 #include <qpOASES.hpp>
 #include <qpOASES/QProblemB.hpp>
-using namespace std;
+
 #define ENABLE_QPBOX 1
 #define DISABLE_QPBOX 0
 #define ENABLE_FULLDDP 1
@@ -103,7 +103,9 @@ public:
     void initTrajectory();
     void backwardLoop();
     void forwardLoop();
-    bool isQuudefinitePositive(const commandMat_t & Quu);
+    char isQuudefinitePositive(commandMat_t& Quu);
+    struct traj getLastSolvedTrajectory();
+private:
 protected:
 
 };
