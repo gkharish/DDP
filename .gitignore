@@ -3,5 +3,6 @@ _build
 */*.user
 .idea
 build
-matlab/
+matlab/slprj
+matlab/*mexglx
 
